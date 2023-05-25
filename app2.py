@@ -6,8 +6,8 @@ def grayscale_conversion(image):
     gray_image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     return gray_image
 
-def black_and_white_conversion(image):
-    _, bw_image = cv2.threshold(image, 128, 255, cv2.THRESH_BINARY)
+def black_and_white_conversion(image, threshold):
+    _, bw_image = cv2.threshold(image, threshold, 255, cv2.THRESH_BINARY)
     return bw_image
 
 def resize_image(image, scale):
@@ -30,31 +30,30 @@ def main():
         image = np.array(bytearray(uploaded_file.read()), dtype=np.uint8)
         image = cv2.imdecode(image, cv2.IMREAD_COLOR)
 
-        # Convert the image to grayscale
-        grayscale_image = grayscale_conversion(image)
+        # Grayscale conversion
+        if st.button("Convert to Grayscale"):
+            grayscale_image = grayscale_conversion(image)
+            st.subheader("Grayscale Image")
+            st.image(grayscale_image, caption="Grayscale Image", use_column_width=True)
 
-        # Convert the grayscale image to black and white
-        _, bw_image = cv2.threshold(grayscale_image, 128, 255, cv2.THRESH_BINARY)
+        # Black and White conversion
+        if st.button("Convert to Black and White"):
+            threshold = st.slider("Threshold", 0, 255, 128)
+            bw_image = black_and_white_conversion(image, threshold)
+            st.subheader("Black and White Image")
+            st.image(bw_image, caption="Black and White Image", use_column_width=True)
 
-        # Resize the grayscale image
-        half_size_image = resize_image(grayscale_image, 0.5)
-        quarter_size_image = resize_image(grayscale_image, 0.25)
+        # Resized grayscale images
+        if st.button("Resize to 1/2 Size"):
+            half_size_image = resize_image(grayscale_image, 0.5)
+            st.subheader("Grayscale Image (1/2 Size)")
+            st.image(half_size_image, caption="Grayscale Image (1/2 Size)", use_column_width=True)
 
-        # Display original and converted images
-        st.subheader("Original Image")
-        st.image(image, channels="BGR", caption="Original Image", use_column_width=True)
-
-        st.subheader("Grayscale Image")
-        st.image(grayscale_image, caption="Grayscale Image", use_column_width=True)
-
-        st.subheader("Black and White Image")
-        st.image(bw_image, caption="Black and White Image", use_column_width=True)
-
-        st.subheader("Grayscale Image (1/2 Size)")
-        st.image(half_size_image, caption="Grayscale Image (1/2 Size)", use_column_width=True)
-
-        st.subheader("Grayscale Image (1/4 Size)")
-        st.image(quarter_size_image, caption="Grayscale Image (1/4 Size)", use_column_width=True)
+        if st.button("Resize to 1/4 Size"):
+            quarter_size_image = resize_image(grayscale_image, 0.25)
+            st.subheader("Grayscale Image (1/4 Size)")
+            st.image(quarter_size_image, caption="Grayscale Image (1/4 Size)", use_column_width=True)
 
 if __name__ == "__main__":
     main()
+
