@@ -6,9 +6,9 @@ from PIL import Image
 
 def main():
     # Introduction
-    st.title("Image to Grayscale Converter")
-    st.write("Welcome to the Image to Grayscale Converter app!")
-    st.write("This app allows you to upload an image and convert it to grayscale.")
+    st.title("Image Converter")
+    st.write("Welcome to the Image Converter app!")
+    st.write("This app allows you to upload an image and convert it to Gray Image, Black and White, Gray Image(1/2 Size), Gray Image(1/4 Size)grayscale. ENJOY!!")
 
 
 part1, part2  = st.columns([0.8,0.2])
