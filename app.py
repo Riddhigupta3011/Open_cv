@@ -4,10 +4,16 @@ import cv2
 from PIL import Image
 
 
+def main():
+    # Introduction
+    st.title("Image to Grayscale Converter")
+    st.write("Welcome to the Image to Grayscale Converter app!")
+    st.write("This app allows you to upload an image and convert it to grayscale.")
+
+
 part1, part2  = st.columns([0.8,0.2])
 with part1:
     st.markdown('Upload your Image')
-
     
 st.sidebar.markdown("Image Converter App")
 uploaded_file = st.file_uploader("", type=['jpg','png','jpeg'])
@@ -48,3 +54,6 @@ if uploaded_file is not None:
             st.image(image, width=300)
 st.sidebar.title(' ') #Used to create some space between the filter widget and the comments section
 st.sidebar.markdown(' ') #Used to create some space between the filter widget and the comments section
+
+if __name__ == "__main__":
+    main()
