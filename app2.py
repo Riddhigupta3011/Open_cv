@@ -30,30 +30,38 @@ def main():
         image = np.array(bytearray(uploaded_file.read()), dtype=np.uint8)
         image = cv2.imdecode(image, cv2.IMREAD_COLOR)
 
-        # Grayscale conversion
-        if st.button("Convert to Grayscale"):
+        # Conversion options
+        conversion_options = st.multiselect(
+            "Select conversion options",
+            ["Grayscale", "Black and White", "Resize to 1/2 Size", "Resize to 1/4 Size"]
+        )
+
+        if "Grayscale" in conversion_options:
             grayscale_image = grayscale_conversion(image)
             st.subheader("Grayscale Image")
             st.image(grayscale_image, caption="Grayscale Image", use_column_width=True)
 
-        # Black and White conversion
-        if st.button("Convert to Black and White"):
+        if "Black and White" in conversion_options:
             threshold = st.slider("Threshold", 0, 255, 128)
             bw_image = black_and_white_conversion(image, threshold)
             st.subheader("Black and White Image")
             st.image(bw_image, caption="Black and White Image", use_column_width=True)
 
-        # Resized grayscale images
-        if st.button("Resize to 1/2 Size"):
+        if "Resize to 1/2 Size" in conversion_options:
+            if "Grayscale" not in conversion_options:
+                grayscale_image = grayscale_conversion(image)
             half_size_image = resize_image(grayscale_image, 0.5)
             st.subheader("Grayscale Image (1/2 Size)")
             st.image(half_size_image, caption="Grayscale Image (1/2 Size)", use_column_width=True)
 
-        if st.button("Resize to 1/4 Size"):
+        if "Resize to 1/4 Size" in conversion_options:
+            if "Grayscale" not in conversion_options:
+                grayscale_image = grayscale_conversion(image)
             quarter_size_image = resize_image(grayscale_image, 0.25)
             st.subheader("Grayscale Image (1/4 Size)")
             st.image(quarter_size_image, caption="Grayscale Image (1/4 Size)", use_column_width=True)
 
 if __name__ == "__main__":
     main()
+
 
