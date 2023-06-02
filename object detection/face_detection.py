@@ -16,8 +16,9 @@ def detect_faces(image):
 
 # Main function
 def main():
-    # Set app title
+    # Set app title and description
     st.title("Face Detection App")
+    st.write("Upload an image and detect faces using Haar cascades.")
     
     # Upload image file
     uploaded_file = st.file_uploader("Choose an image", type=["jpg", "jpeg", "png"])
@@ -30,7 +31,7 @@ def main():
         faces = detect_faces(image)
         
         # Display the original image
-        st.image(image, channels="BGR")
+        st.image(image, channels="BGR", caption="Original Image")
         
         # Display the number of faces detected
         st.write(f"Number of faces detected: {len(faces)}")
@@ -40,7 +41,7 @@ def main():
             cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
         
         # Display the annotated image
-        st.image(image, channels="BGR")
+        st.image(image, channels="BGR", caption="Annotated Image")
 
 # Run the app
 if __name__ == "__main__":
